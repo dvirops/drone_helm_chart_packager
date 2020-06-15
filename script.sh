@@ -32,12 +32,12 @@ if [ -z "$PLUGIN_TAG" ]; then
 fi
 
 LOWER_CHART_NAME=$(echo "$PLUGIN_CHART_NAME" | tr '[:upper:]' '[:lower:]')
-SOURCE_CHART=${PLUGIN_SOURCE_CHART:-generic}
+SOURCE_CHART=${PLUGIN_SOURCE_CHART:-generic-name}
 PATH_TO_VALUES_FILE=${PLUGIN_PATH_TO_VALUES_FILE:-values.yaml}
 
 update_chart_name() {
   if [ -f "$LOWER_CHART_NAME"/Chart.yaml ]; then
-    sed -i s/dynamic/"$LOWER_CHART_NAME"/g "$LOWER_CHART_NAME"/Chart.yaml
+    sed -i s/generic-name/"$LOWER_CHART_NAME"/g "$LOWER_CHART_NAME"/Chart.yaml
   else
     echo "Chart.yaml file not found" && exit 1
   fi
@@ -80,12 +80,8 @@ push_chart() {
   echo ' '
 }
 
-# Initiate only the helm client.
-helm init >/dev/null
-
 # Add chartmuseum repo.
 helm repo add "$PLUGIN_REPO_NAME" "$PLUGIN_REPO_URL" --username="$PLUGIN_CHART_USERNAME" --password="$PLUGIN_CHART_PASSWORD" >/dev/null
-
 # Update the new repo.
 helm repo update >/dev/null
 
