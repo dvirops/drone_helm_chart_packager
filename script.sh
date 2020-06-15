@@ -33,7 +33,7 @@ fi
 
 LOWER_CHART_NAME=$(echo "$PLUGIN_CHART_NAME" | tr '[:upper:]' '[:lower:]')
 SOURCE_CHART=${PLUGIN_SOURCE_CHART:-generic}
-VALUES_FILE_PATH=${PLUGIN_VALUES_FILE_PATH:-values.yaml}
+PATH_TO_VALUES_FILE=${PLUGIN_PATH_TO_VALUES_FILE:-values.yaml}
 
 update_chart_name() {
   if [ -f "$LOWER_CHART_NAME"/Chart.yaml ]; then
@@ -45,10 +45,10 @@ update_chart_name() {
 
 # Replace default values file in the source chart.
 move_new_values() {
-  if [ -f "$VALUES_FILE_PATH" ]; then
-    cp "$VALUES_FILE_PATH" "$LOWER_CHART_NAME"/values.yaml
+  if [ -f "$PATH_TO_VALUES_FILE" ]; then
+    cp "$PATH_TO_VALUES_FILE" "$LOWER_CHART_NAME"/values.yaml
   else
-    echo "$VALUES_FILE_PATH file not found" && exit 1
+    echo "$PATH_TO_VALUES_FILE file not found" && exit 1
   fi
 }
 
