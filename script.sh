@@ -34,6 +34,7 @@ fi
 LOWER_CHART_NAME=$(echo "$PLUGIN_CHART_NAME" | tr '[:upper:]' '[:lower:]')
 SOURCE_CHART=${PLUGIN_SOURCE_CHART:-generic-name}
 PATH_TO_VALUES_FILE=${PLUGIN_PATH_TO_VALUES_FILE:-values.yaml}
+CHART_ICON_URL=${PLUGIN_CHART_ICON_URL:-"https://cdn3.iconfinder.com/data/icons/UltimateGnome/256x256/emblems/emblem-generic.png"}
 
 update_chart_name() {
   if [ -f "$LOWER_CHART_NAME"/Chart.yaml ]; then
@@ -59,7 +60,7 @@ update_app_version() {
 
 # Update app icon in the chart file.
 update_icon_url() {
-  sed -i "s/^icon: .*/icon: ${PLUGIN_ICON_URL}/g" "$LOWER_CHART_NAME"/Chart.yaml
+  sed -i "s~^icon: .*~icon: ${CHART_ICON_URL}~g" "$LOWER_CHART_NAME"/Chart.yaml
 }
 
 # Update docker tag in values file.
