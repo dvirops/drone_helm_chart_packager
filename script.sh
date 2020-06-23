@@ -26,8 +26,13 @@ if [ -z "$PLUGIN_CHART_PASSWORD" ]; then
   exit 1
 fi
 
-if [ -z "$PLUGIN_TAG" ]; then
-  echo "Missing tag, can't continue, exiting."
+if [ -z "$PLUGIN_DOCKER_TAG" ]; then
+  echo "Missing docker tag, can't continue, exiting."
+  exit 1
+fi
+
+if [ -z "$PLUGIN_CHART_VERSION" ]; then
+  echo "Missing chart version, can't continue, exiting."
   exit 1
 fi
 
@@ -55,7 +60,7 @@ move_new_values() {
 
 # Upadte app version in the chart file.
 update_app_version() {
-  sed -i "s/^appVersion: .*/appVersion: ${PLUGIN_TAG}/g" "$LOWER_CHART_NAME"/Chart.yaml
+  sed -i "s/^appVersion: .*/appVersion: ${PLUGIN_CHART_VERSION}/g" "$LOWER_CHART_NAME"/Chart.yaml
 }
 
 # Update app icon in the chart file.
@@ -65,7 +70,7 @@ update_icon_url() {
 
 # Update docker tag in values file.
 update_docker_tag() {
-  sed -i s/do-not-change/"$PLUGIN_TAG"/g "$LOWER_CHART_NAME"/values.yaml
+  sed -i s/do-not-change/"$PLUGIN_DOCKER_TAG"/g "$LOWER_CHART_NAME"/values.yaml
 }
 
 # Check if the chart is validate.
@@ -77,7 +82,7 @@ check_chart() {
 
 # Push the chart if not production chart is needed, the push will be to chartmuseum repo.
 push_chart() {
-  helm push "$LOWER_CHART_NAME"/ --version="$PLUGIN_TAG" "$PLUGIN_REPO_NAME"
+  helm push "$LOWER_CHART_NAME"/ --version="$PLUGIN_CHART_VERSION" "$PLUGIN_REPO_NAME"
   echo ' '
 }
 
