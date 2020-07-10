@@ -53,6 +53,7 @@ update_chart_name() {
 move_new_values() {
   if [ -f "$PATH_TO_VALUES_FILE" ]; then
     cp "$PATH_TO_VALUES_FILE" "$LOWER_CHART_NAME"/values.yaml
+    cp values-*.yaml "$LOWER_CHART_NAME"/
   else
     echo "$PATH_TO_VALUES_FILE file not found" && exit 1
   fi
