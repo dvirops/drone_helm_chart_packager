@@ -72,6 +72,10 @@ update_icon_url() {
 # Update docker tag in values file.
 update_docker_tag() {
   sed -i s/do-not-change/"$PLUGIN_DOCKER_TAG"/g "$LOWER_CHART_NAME"/values.yaml
+
+  for i in "$LOWER_CHART_NAME"/values-*.yaml; do
+    sed -i s/do-not-change/"$PLUGIN_DOCKER_TAG"/g "$i" || exit 0
+  done
 }
 
 # Check if the chart is validate.
