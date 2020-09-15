@@ -41,6 +41,10 @@ SOURCE_CHART=${PLUGIN_SOURCE_CHART:-generic-name}
 PATH_TO_VALUES_FILE=${PLUGIN_PATH_TO_VALUES_FILE:-values.yaml}
 CHART_ICON_URL=${PLUGIN_CHART_ICON_URL:-"https://cdn3.iconfinder.com/data/icons/UltimateGnome/256x256/emblems/emblem-generic.png"}
 
+echo "LOWER_CHART_NAME: $LOWER_CHART_NAME"
+echo "SOURCE_CHART: $SOURCE_CHART"
+echo "PATH_TO_VALUES_FILE: $PATH_TO_VALUES_FILE"
+
 update_chart_name() {
   if [ -f "$LOWER_CHART_NAME"/Chart.yaml ]; then
     sed -i s/generic-name/"$LOWER_CHART_NAME"/g "$LOWER_CHART_NAME"/Chart.yaml
@@ -108,6 +112,8 @@ for file in ./"$SOURCE_CHART"-*.tgz; do
     exit 1
   fi
 done
+
+ls -lah "$LOWER_CHART_NAME"
 
 update_chart_name
 move_new_values
